@@ -13,7 +13,7 @@
 * Run metronome drivers (rosrun metronome_controller MetronomeDriver#.py) and purepursuit_node#.py for each turtlebot (they must have different node names for ideal operation) 
 * Run metronome scheduler on command station (rosrun metronome_controller MetronomeScheduler.py) 
  
-## **UNDERSTANDING MetronomeScheduler.py CODE: **
+## **UNDERSTANDING MetronomeScheduler.py CODE:**
 ### Description: The "master" for the UWB metronome experiment. Plans elevation angles (and turtlebot distance (based on simulation of two drones with UWBs antennas at varying heights and distances. Sends the planned data to the turtlebot and servo motor drivers. Refer to image below for reference.
 * **\_\_init()\_\_** Initializes variables target_angle_pub (target angle publisher), and bot_dist (turtlebot distance but too be changed in future version)
 * **angle_distance_planner()**: Plans for elevation angles (degrees) and turtlebot distance using (x,z) coordinates, sends elevation angles and distances through angle\_sender and distance\_sender funsctions.
@@ -23,13 +23,13 @@
 
 <image width="50%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Metronome_Transformation_Diagram.png"></image>
 
-## **UNDERSTANDING MetronomeDriver1.py CODE: **
+## **UNDERSTANDING MetronomeDriver1.py CODE:**
 ### Description: Subscribes to target_angle topic and sends that info through the serial port to the AX12 servo motor. 
 ### Functions:
 * **\_\_init()\_\_**: Initializes variables arduino_port (the serial port connection) and target_angle_sub (subscribes to target angle topic)
 * **target_angle_callback (msg: Int16)**: Subscriber callback converts angle Int16 into 8 bit byte equivilant, writes it to arduino, and arduino logs response
 
-## **UNDERSTANDING purepursuit-main Directory:
+## **UNDERSTANDING purepursuit-main Directory:**
 ### Description: In purepursuit-main is purepursuit_node.py, a ROS node that employs the purepursuit algorithm implemented in the src directory.
 ### Pure pursuit algorithm controller: Computes the steering angle based on the turtlebot's position relative to a desired path, allowing the robot to smoothly follow the path by adjusting its steering angle.
 ### **Important functions**
