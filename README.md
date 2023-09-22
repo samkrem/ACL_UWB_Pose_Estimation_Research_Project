@@ -4,7 +4,7 @@
 * Develop a ROS planner that controls an autonomous experiment to test UWB SLAM and bags motion capture and UWB 6D pose data
 * Develop a PyTorch fully connected neural network that corrects sensor noise bias
 
-##**Directions:**
+## **Directions:**
 * Follow instructions for setting up electronics.
 * Verify connections and that correct Arduino code is uploaded
 * Set up turtlebot nucs and a command station. 
@@ -20,7 +20,7 @@
 * **angle\_sender(ang)**: Publishes target_angle as Int16 to MetronomeDriver1.py, sleeps to allow for servo to move
 * **distance\_sender(ang)**: Publishes dist as Int16 to purepursuit_node.py, sleeps to allow for turtlebot to move
 * **round(num)**: rounds a float angle to an integer
-![ACL_UWB](https://github.com/fishberg/urop-metronome/blob/main/images/Metronome_Transformation_Diagram.png)
+<image width="50%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Metronome_Transformation_Diagram.png"></image>
 
 ## **UNDERSTANDING MetronomeDriver1.py CODE: **
 ### Description: Subscribes to target_angle topic and sends that info through the serial port to the AX12 servo motor. 
@@ -73,16 +73,15 @@
         1.1 Black wire goes to ground
         1.2 Purple wire (from lower servo) goes to TX1 (Communications Port 18) 
         2.4 Green wire (from upper servo) goes to TX2 (Communications Port 16)
+<image width="50%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Servo_Wiring_1.png"></image>
+<image width="50%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Servo_Wiring_2.png"></image>
 
-![ACL_UWB](https://github.com/fishberg/urop-metronome/blob/main/images/Servo_Wiring_1.png)
-
-![ACL_UWB](https://github.com/fishberg/urop-metronome/blob/main/images/Servo_Wiring_2.png)
 
 2. Before running the program and connecting all the wiresconnect the MM dean to the Lipo/Power Supply 
         
         2.1 Turn on the power supply, and set its voltage to **11.1 volts** (coarse voltage adjusts voltage quicker whereas fine voltage adjusts voltage more precisely)
         2.2 Use a 11.1V 3 cell Lithium Polymer (Lipo) battery (DEAN connector)
-![ACL_UWB](https://github.com/fishberg/urop-metronome/blob/main/images/Servo_Wiring_3.png)
+<image width="50%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Servo_Wiring_3.png"></image>
 
 3. If using power supply, turn it on
 4. To start over, click the reset button on the Arduino. To stop, the easiest way is to turn off the power
