@@ -14,7 +14,7 @@
 * Run metronome scheduler on command station (rosrun metronome_controller MetronomeScheduler.py) 
  
 ## **UNDERSTANDING MetronomeScheduler.py CODE: **
-### Description: The "master" for the UWB metronome experiment. Plans elevation angles (and turtlebot distance (based on simulation of two drones at varying heights and distances. Sends the planned data to the turtlebot and servo motor drivers. Refer to image below for reference.
+### Description: The "master" for the UWB metronome experiment. Plans elevation angles (and turtlebot distance (based on simulation of two drones with UWBs antennas at varying heights and distances. Sends the planned data to the turtlebot and servo motor drivers. Refer to image below for reference.
 * **\_\_init()\_\_** Initializes variables target_angle_pub (target angle publisher), and bot_dist (turtlebot distance but too be changed in future version)
 * **angle_distance_planner()**: Plans for elevation angles (degrees) and turtlebot distance using (x,z) coordinates, sends elevation angles and distances through angle\_sender and distance\_sender funsctions.
 * **angle\_sender(ang)**: Publishes target_angle as Int16 to MetronomeDriver1.py, sleeps to allow for servo to move
