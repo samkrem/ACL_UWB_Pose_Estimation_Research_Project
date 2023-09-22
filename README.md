@@ -74,7 +74,7 @@
         1.1 Black wire goes to ground
         1.2 Purple wire (from lower servo) goes to TX1 (Communications Port 18) 
         2.4 Green wire (from upper servo) goes to TX2 (Communications Port 16)
-<image width="30%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Servo_Wiring_1.png"></image>
+<image length="30%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Servo_Wiring_1.png"></image>
 <image width="30%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Servo_Wiring_2.png"></image>
 
 
