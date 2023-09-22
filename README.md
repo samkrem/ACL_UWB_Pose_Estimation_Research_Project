@@ -1,7 +1,7 @@
 # **ACL_UWB**
 # **Aerospace Controls Lab Ultrawideband (UWB) Simultaneous Localization and Mapping (SLAM) Planner and Neural Network**
 ## Main Objectives: 
-* Develop a ROS planner that controls an autonomous experiment to test UWB SLAM and bags motion capture and UWB 6D pose data
+* Develop a ROS planner that controls an autonomous robot experiment to test UWB SLAM and bags motion capture and UWB 6D pose data
 * Develop a PyTorch fully connected neural network that corrects sensor noise bias
 
 ## **Directions:**
