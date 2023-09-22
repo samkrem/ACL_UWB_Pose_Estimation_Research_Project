@@ -10,7 +10,7 @@
 * Set up turtlebot nucs and a command station. 
 * Create a roscore.
 * Source metronome_controller package (~/workspace/uwb-workspace/metronome_ws/devel/setup.bash).
-* Run metronome drivers (rosrun metronome_controller MetronomeDriver#.py) for each turtlebot (they must have different node names for ideal operation) 
+* Run metronome drivers (rosrun metronome_controller MetronomeDriver#.py) and purepursuit_node#.py for each turtlebot (they must have different node names for ideal operation) 
 * Run metronome scheduler on command station (rosrun metronome_controller MetronomeScheduler.py) 
  
 ## **UNDERSTANDING MetronomeScheduler.py CODE: **
