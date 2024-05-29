@@ -84,7 +84,7 @@ void custom_sequence(int sec, float ang1, float ang2){
   move_to_angleself(2, ang2, 80, 1000*sec); 
   delay(1000);
 
-  move_to_angleself(1, init_lower_servo_ang+ang1, 100, 1000*sec);
+  move_to_angleself(1, ang1, 100, 1000*sec);
   delay(1000);
 }
 
