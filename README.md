@@ -48,12 +48,16 @@
 * A teammate created this ROS subscriber that takes in information from the Robot System Scheduler and inputs this data into a pure pursuit controller
 
 ### Actuator Wiring and Quickstart Guide 
-1. Attach the top servo motor wire to an available connection. The right wire of the top servo connects to mount's ground wire (white or black depending on mount). The free wire that is connected to the top servo motor should go in Mega 2560's TX16 port
-2. Attach the bottom servo motor wire to the other connection. The servos' right wire (it is right wire if 1D robots text is below port) connects to the mount ground wire (white or black depending on mount). The free wire that is connected to the top servo motor should go in Mega 2560's TX18 port
+1. Attach the top servo motor wire to an available connection.
+   * The right wire of the top servo connects to mount's ground wire (white or black depending on mount).
+   * The free wire that is connected to the top servo motor should go in Mega 2560's TX16 port
+2. Attach the bottom servo motor wire to the other connection.
+   * The servos' right wire (it is right wire if 1D robots text is below port) connects to the mount ground wire (white or black depending on mount).
+   * The free wire that is connected to the top servo motor should go in Mega 2560's TX18 port
 3. Attach remaining harness ground wire (black or white) into any arduino ground port
 4. Plug blue serial port wire into arduino and nuc
 5. Plug LIPO battery into harness mount DEAN connector Repeat 1-5 for each actuator
-6. In a terminal: roscore
+6. In a terminal: `roscore`
 7. In another terminal: type `source ~/workspace/uwb-workspace/metronome_ws/devel/setup.bash In the other terminal:`, `roslaunch metronome_controller metronome_actuator.launch`
 
 ## Noise Prediction Model Information (Noise_Prediction_Model.pynb
