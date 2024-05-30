@@ -2,13 +2,14 @@
 # **Aerospace Controls Lab Multi-Agent Ultrawideband (UWB) Relative Pose Estimation Planner and Neural Network**
 ## Main Objective of Experiment: 
 * Improve UWB pose estimation for multi-agent system by finding a relationship between real relative pose and UWB relative pose
-## Key Steps to Run Experiment:
+## Key Steps to Achieve Object:
 * Create a ROS planner that controls an autonomous robot experiment to collect motion capture and UWB pose data
 * Develop a PyTorch fully connected neural network that predicts sensor noise given true pose and distance.
 ## Materials Required to Run Experiment:
 *  A robotic system featuring a two-wheeled mobile robot capable of xy coordinate and yaw orientation control, augmented by an actuator to manage azimuth and elevation angles for ultrawideband sensors.
 *  A motion capture system to collect real pose data
-## High-level Contributions:
+*  Pose estimation algorithms for ultra-wideband sensors
+## My High-level Contributions:
 * Design a waypoint generator that produces a CSV file containing custom pose data for two robot systems given input parameters, complete with a visualization of both robots' paths.
 * Developed robot control pipeline that utilizes a Python-based ROS publisher-subscriber framework to send extended pose data(x,y,yaw,azimuth,elevation) to multiple robot systems, alongside a C++ program that tokenizes (azimuth, elevation) data and operates the actuator.
 * Integrate actuator control pipeline into a launch file for efficient and error-free access
