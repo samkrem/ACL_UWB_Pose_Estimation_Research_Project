@@ -60,7 +60,7 @@
 6. In a terminal: `roscore`
 7. In another terminal: type `source ~/workspace/uwb-workspace/metronome_ws/devel/setup.bash In the other terminal:`, `roslaunch metronome_controller metronome_actuator.launch`
 
-## Noise Prediction Model Information (Noise_Prediction_Model.pynb
+## Noise Prediction Model Information (Noise_Prediction_Model.py)
 ### Neural Network Architecture 
 * Input Features: Change in true pose and distance between robots
 * Hidden Layer 1: 256 neurons
