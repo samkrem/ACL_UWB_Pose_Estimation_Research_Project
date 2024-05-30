@@ -50,14 +50,14 @@
 ### Actuator Wiring and Quickstart Guide 
 1. Attach the top servo motor wire to an available connection.
    * The right wire of the top servo connects to mount's ground wire (white or black depending on mount).
-     ![Hello](https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1a.jpg)
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1a.jpg" alt="Hello" width="200">
    * The free wire that is connected to the top servo motor should go in Mega 2560's TX16 port
-     ![Hello](https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1b.jpg)
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1b.jpg" alt="Hello" width="200">
 2. Attach the bottom servo motor wire to the other connection.
    * The servos' right wire (it is right wire if 1D robots text is below port) connects to the mount ground wire (white or black depending on mount).
-     ![Hello](https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step2a.jpg)
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step2a.jpg" alt="Hello" width="200">
    * The free wire that is connected to the top servo motor should go in Mega 2560's TX18 port
-     ![Hello](https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step2b.jpg)
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step2b.jpg" alt="Hello" width="200">
 3. Attach remaining harness ground wire (black or white) into any arduino ground port
 4. Plug blue serial port wire into arduino and nuc
 5. Plug LIPO battery into harness mount DEAN connector Repeat 1-5 for each actuator
