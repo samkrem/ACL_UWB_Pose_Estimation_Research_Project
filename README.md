@@ -25,7 +25,7 @@
 * In order for a CSV file to be generated, the two robots must have the same total number of poses
 * The azimuth angle has range from (-150,150) and the elevation has a range from (-80,80)
 ### Operation
-* Make a csv filename  (Line 6)
+* Make a CSV filename  (Line 6)
 * Go to the generate_waypoints function
 * Pick a path for both robots (Line 350) 
 * Pick custom parameters and bounds for both robots or choose random, default values (Line 307)
@@ -34,6 +34,7 @@
 * Now, a CSV file should have been generated
 * For more information consult [this slideshow](https://docs.google.com/presentation/d/1mAoERAXJj5MNAZ7o4W73mpC9JDMGl20eGiCZpD5WNRs/edit#slide=id.g2c7d78624b1_2_0)
 ## Robot Control Pipeline
+
 ### Robot System Scheduler (Metronome_Scheduler_Cmd.py)
 * This ROS publisher reads the CSV file created by the waypoint generator and sends azimuth and elevation data to the actuator and x,y,yaw data to the wheeled robot
 * Pose data is published to two actuators and two wheeled robots through a Float32MultiArray consisting of an individual (x,y,yaw,azimuth,elevation)
@@ -46,18 +47,27 @@
 * The controller program then controls and operates the actuator using the elevation and azimuth angle
 ### Wheeled Robot Controller 
 * A teammate created this ROS subscriber that takes in information from the Robot System Scheduler and inputs this data into a pure pursuit controller
+### Materials and Schematic for Actuator Component of Scheduler
+* 1 NUC
+* 2x wire harness mounts
+* Two AX-12A actuators
+* Two 11.1V 3 Cell Lipo Batteries
+* Two Arduino Mega 2560s
+* Two serial port wires connecting arduino to NUC
+  <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Wiring_Diagram.png" alt="Hello" width="400">
+
 
 ### Actuator Wiring and Quickstart Guide 
 1. Attach the top servo motor wire to an available connection.
    * The right wire of the top servo connects to mount's ground wire (white or black depending on mount).
-<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1a.jpg" alt="Hello" width="200">
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1a.jpg" alt="Hello" width="400">
    * The free wire that is connected to the top servo motor should go in Mega 2560's TX16 port
-<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1b.jpg" alt="Hello" width="200">
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1b.jpg" alt="Hello" width="400">
 2. Attach the bottom servo motor wire to the other connection.
    * The servos' right wire (it is right wire if 1D robots text is below port) connects to the mount ground wire (white or black depending on mount).
-<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step2a.jpg" alt="Hello" width="200">
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step2a.jpg" alt="Hello" width="400">
    * The free wire that is connected to the top servo motor should go in Mega 2560's TX18 port
-<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step2b.jpg" alt="Hello" width="200">
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step2b.jpg" alt="Hello" width="400">
 3. Attach remaining harness ground wire (black or white) into any arduino ground port
 4. Plug blue serial port wire into arduino and nuc
 5. Plug LIPO battery into harness mount DEAN connector Repeat 1-5 for each actuator
