@@ -4,7 +4,7 @@
 * Develop a ROS planner that controls an autonomous robot experiment to test UWB SLAM and bags motion capture and UWB 6D pose data
 * Develop a PyTorch fully connected neural network that corrects sensor noise bias
 
-## **Directions:**
+## **Directions:** ##
 * Follow instructions for setting up electronics.
 * Verify connections and that correct Arduino code is uploaded
 * Set up turtlebot nucs and a command station. 
