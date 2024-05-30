@@ -1,91 +1,77 @@
 # **ACL_UWB**
-# **Aerospace Controls Lab Ultrawideband (UWB) Simultaneous Localization and Mapping (SLAM) Planner and Neural Network**
-## Main Objectives: 
-* Develop a ROS planner that controls an autonomous robot experiment to test UWB SLAM and bags motion capture and UWB 6D pose data
-* Develop a PyTorch fully connected neural network that corrects sensor noise bias
+# **Aerospace Controls Lab Multi-Agent Ultrawideband (UWB) Relative Pose Estimation Planner and Neural Network**
+## Main Objective of Experiment: 
+* Improve UWB pose estimation for multi-agent system by finding a relationship between real relative pose and UWB relative pose
+## Key Steps to Run Experiment:
+* Create a ROS planner that controls an autonomous robot experiment to collect motion capture and UWB pose data
+* Develop a PyTorch fully connected neural network that predicts sensor noise given true pose and distance.
+## Materials Required to Run Experiment:
+*  A robotic system featuring a two-wheeled mobile robot capable of xy coordinate and yaw orientation control, augmented by an actuator to manage azimuth and elevation angles for ultrawideband sensors.
+*  A motion capture system to collect real pose data
+## High-level Contributions:
+* Design a waypoint generator that produces a CSV file containing custom pose data for two robot systems given input parameters, complete with a visualization of both robots' paths.
+* Developed robot control pipeline that utilizes a Python-based ROS publisher-subscriber framework to send extended pose data(x,y,yaw,azimuth,elevation) to multiple robot systems, alongside a C++ program that tokenizes (azimuth, elevation) data and operates the actuator.
+* Integrate actuator control pipeline into a launch file for efficient and error-free access
+* Design and solder wire hardware that allows for easy connection between battery power, Arduino board, and actuator.
+* Train, validate, and test fully connected neural network on true pose input data and sensor noise output data to create a model that can accurately predict ultrawideband pose.
+## Waypoint Generator Information (waypoint_generator.py)
+### Specifications
+* The waypoint generator has four types of path styles: stationary, exhaustive, sinusoidal, and circular with each path being customizable given various paramters and pose bounds
+* Stationary: The robot's x,y start coordinate is stationary while the yaw, azimuth and elevation are free to change
+* Exhaustive: The robot systematically explores every possible combination of (x,y,yaw, azimuth elevation) poses within specified ranges and step sizes in a rectangular manner. The direction and starting point of its travel can be adjusted in eight distinct ways, ensuring comprehensive coverage of the entire pose space.
+* Circular: The robot explores every possible comination of poses in a circular manner given distance between each circle and number of circles.
+* Sinusoidal: The robot explores combinations of poses in a sinusoidal manner. The direction of travel (horizontal or vertical), the distance between waves, and the length of each wave can be customized.
+* Multiple pose combinations can be combined into one path using the line `np.concatenate(waypoints_list, axis=0`
+* In order for a CSV file to be generated, the two robots must have the same total number of poses
+* The azimuth angle has range from (-150,150) and the elevation has a range from (-80,80)
+### Operation
+* Make a csv filename  (Line 6)
+* Go to the generate_waypoints function
+* Pick a path for both robots (Line 350) 
+* Pick custom parameters and bounds for both robots or choose random, default values (Line 307)
+* Combined various paths if need be
+* Run generate_waypoints.py
+* Now, a CSV file should have been generated
+* For more information consult [this slideshow](https://docs.google.com/presentation/d/1mAoERAXJj5MNAZ7o4W73mpC9JDMGl20eGiCZpD5WNRs/edit#slide=id.g2c7d78624b1_2_0)
+## Robot Control Pipeline
+### Robot System Scheduler (Metronome_Scheduler_Cmd.py)
+* This ROS publisher reads the CSV file created by the waypoint generator and sends azimuth and elevation data to the actuator and x,y,yaw data to the wheeled robot
+* Pose data is published to two actuators and two wheeled robots through a Float32MultiArray consisting of an individual (x,y,yaw,azimuth,elevation)
+* The rate at which data can be sent to the subscriber is customizable.
+### Actuator Drivers 1 & 2 (Metronome_Driver_#.py)
+* The metronome driver receives information published from the scheduler and sends it to an Arduino Mega 2560's serial port
+* Azimuth and elevation angles are sent through the serial port as a byte string
+### Actuator Controller (uwb_platforms_final_python_driver.ino)
+* The controller program parses a bytestring into two floats representing an elevation and azimuth angle
+* The controller program then controls and operates the actuator using the elevation and azimuth angle
+### Wheeled Robot Controller 
+* A teammate created this ROS subscriber that takes in information from the Robot System Scheduler and inputs this data into a pure pursuit controller
 
-## **Directions:** ##
-* Follow instructions for setting up electronics.
-* Verify connections and that correct Arduino code is uploaded
-* Set up turtlebot nucs and a command station. 
-* Create a roscore.
-* Source metronome_controller package (~/workspace/uwb-workspace/metronome_ws/devel/setup.bash).
-* Run metronome drivers (rosrun metronome_controller MetronomeDriver#.py) and purepursuit_node#.py for each turtlebot (they must have different node names for ideal operation) 
-* Run metronome scheduler on command station (rosrun metronome_controller MetronomeScheduler.py) 
- 
-## **Understanding MetronomeScheduler.py CODE:** ##
-### Description: The "master" for the UWB metronome experiment. Plans elevation angles (and turtlebot distance (based on simulation of two drones with UWBs antennas at varying heights and distances. Sends the planned data to the turtlebot and servo motor drivers. Refer to image below for reference.
-* `````__init()__````` Initializes variables target_angle_pub (target angle publisher), and bot_dist (turtlebot distance but too be changed in future version)
-* `````angle_distance_planner()`````: Plans for elevation angles (degrees) and turtlebot distance using (x,z) coordinates, sends elevation angles and distances through angle\_sender and distance\_sender funsctions.
-* `````angle_sender(ang)`````: Publishes target_angle as Int16 to MetronomeDriver1.py, sleeps to allow for servo to move
-* `````distance_sender(ang)`````: Publishes dist as Int16 to purepursuit_node.py, sleeps to allow for turtlebot to move
-* `````round(num)`````: rounds a float angle to an integer
+### Actuator Wiring and Quickstart Guide 
+1. Attach the top servo motor wire to an available connection. The right wire of the top servo connects to mount's ground wire (white or black depending on mount). The free wire that is connected to the top servo motor should go in Mega 2560's TX16 port
+2. Attach the bottom servo motor wire to the other connection. The servos' right wire (it is right wire if 1D robots text is below port) connects to the mount ground wire (white or black depending on mount). The free wire that is connected to the top servo motor should go in Mega 2560's TX18 port
+3. Attach remaining harness ground wire (black or white) into any arduino ground port
+4. Plug blue serial port wire into arduino and nuc
+5. Plug LIPO battery into harness mount DEAN connector Repeat 1-5 for each actuator
+6. In a terminal: roscore
+7. In another terminal: type `source ~/workspace/uwb-workspace/metronome_ws/devel/setup.bash In the other terminal:`, `roslaunch metronome_controller metronome_actuator.launch`
 
-<image width="50%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Metronome_Transformation_Diagram.png"></image>
+## Noise Prediction Model Information (Noise_Prediction_Model.pynb
+### Neural Network Architecture 
+* Input Features: Change in true pose and distance between robots
+* Hidden Layer 1: 256 neurons
+* Hidden Layer 2: 128 neurons
+* Hidden Layer 3: 64 neurons
+* Hidden Layer 4: 32 neurons
+* Output Layer: Sensor Noise
+* Dropout Rate: 0.1
+### Input Specifications
+* Pose data ranges: Translational components: (X: 0-3.5m, Y: 0-3.5m, Z: 0-3.5m) and Rotational components: (Roll: -180°-180° , Pitch: -90°-90°, Yaw: -180°-180°). Note: For this experiment specifically, Neural Network input will only be x,y,yaw with complementary azimuth and elevation data although this neural network can be adapted to other UWB pose experiments that estiamte 6D pose.
+* True Distance: distance between two robots
+### Output Specifications
+* Mean sensor noise for given distance and relative pose
+  
 
-## **Understanding MetronomeDriver1.py CODE:** ##
-### Description: Subscribes to target_angle topic and sends that info through the serial port to the AX12 servo motor. 
-### Functions:
-* `````__init()__`````: Initializes variables arduino_port (the serial port connection) and target_angle_sub (subscribes to target angle topic)
-* `````arget_angle_callback (msg: Int16)`````: Subscriber callback converts angle Int16 into 8 bit byte equivilant, writes it to arduino, and arduino logs response
-
-## **Understanding purepursuit-main Directory:** ##
-### Description: In purepursuit-main is purepursuit_node.py, a ROS node that employs the purepursuit algorithm implemented in the src directory.
-### Pure pursuit algorithm controller: Computes the steering angle based on the turtlebot's position relative to a desired path, allowing the robot to smoothly follow the path by adjusting its steering angle.
-### **Important functions**
-*  `````__init__(self, namespace)`````: Initializes variables purepursuit (relies on lookahead distance, radius, and velocity), command (publishes velocity), goal_status_pub (publishes GoalStatus object)
-*  `````loop_cb(event)`````: Subscriber callback for timer. Publishes vel_des (desired velocity) and goal_status (goal status)
-*  `````pose_cb(pose_stamped)`````: Subscriber callback for world. Sets velocities, updates path if receiving the same trajectory, and checks goal_status
-*  `````path_cb(path)`````: Subscriber callback for path. Updates path.
-## **Understanding uwb_platforms_final_python_driver.ino CODE:** 
-### Description: Arduino script that directly controls upper servo motor through python driver angle inputs
-### **Important variables**: 
-* `````#define BaudRate (1000000)`````: Way of configuring baud rate for AX12A.h servo motors **(Note: if baudrate isn't 1000000, none of the code will work)** 
-* `````curr_servo_angle`````: current angle for upper servo motor
-* `````prev_servo_angle`````: previous angle for upper servo motor
-### **Important functions:** 
-* `````move_to_angle(ang, sp)`````: moves upper servo motor 
-
-## **Understsanding uwb_platforms_final_user_input.ino CODE** ##
-### Description: Arduino script that directly controls upper and lower servo motors through serial user input
-### **Important variables**:
-* `````#define BaudRate (1000000)`````: Way of configuring baud rate for AX12A.h servo motors **(Note: if baudrate isn't 1000000, none of the code will work)**
-* `````yawstep`````: the yaw angle in degrees to turn each step (originally set to 15) 
-* `````pitchstep`````: the pitch angle in degrees to turn after each complete yaw sweep (originally set to 15) 
-* `````timestep`````: the time in seconds it waits between changing angles 
-* `````min_pitch_angle`````: the lowest angle in degrees the pitch can get with respect to the vertical direction (recommended setting: -90) 
-* `````max_pitch_angle`````: the highest angle in degrees the pitch can get with respect to the vertical direction (recommended setting: 90) 
-* `````min_yaw_angle`````: the complete sweep range of the yaw angle in degrees (recommended setting -150)
-* `````max_yaw_angle`````: the complete sweep range of the yaw angle in degrees (recommended setting 150)
-### **Important function in code (see code for other annotations if needed):**
-* `````custom_sequence(int sec, int ang1, int ang2)`````: adjusts lower and upper servos by a specified amount of degrees within the max_yaw_angle and max_pitch_angle bounds
-* `````testing_sequence(int sec)`````: adjusts lower and upper servos motor at many different orientations 
-* `````move_to_angleself(int num, int ang, int sp, int t)`````: moves servo to desired location, where inputting a number (1 for lower servo, 2 for upper servo) will turn desired servo
-* `````subscriberCallback`````: ROS subscriber callback method that returns an elevation angle
-## **Understanding UWB_Sensor_Noise_Correction.ipynb:**
-### Description: Takes in UWB and motion capture 6d pose binary files, converts data into tensors, corrects data through a three layer fully connected neural network, and saves weight and bias
-### Specifications: (see code comments for more info)
-* Loss function: `````nn.MSELoss()````` (mean squared error loss)
-* Optimizer: `````optim.AdamW(model.parameters(), lr=0.001)````` (Adam optimizer)
-### 
-## **INSTRUCTIONS FOR SETTING UP THE ELECTRONICS:**
-1. Check that the connections of the Arduino MEGA are consistent with the image below 
-
-        1.1 Black wire goes to ground
-        1.2 Purple wire (from lower servo) goes to TX1 (Communications Port 18) 
-        2.4 Green wire (from upper servo) goes to TX2 (Communications Port 16)
-<image width="50%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Servo_Wiring_1.png"></image>
-<image width="50%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Servo_Wiring_2.png"></image>
-
-
-2. Before running the program and connecting all the wiresconnect the MM dean to the Lipo/Power Supply 
-        
-        2.1 Turn on the power supply, and set its voltage to **11.1 volts** (coarse voltage adjusts voltage quicker whereas fine voltage adjusts voltage more precisely)
-        2.2 Use a 11.1V 3 cell Lithium Polymer (Lipo) battery (DEAN connector)
-<image width="50%" src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Servo_Wiring_3.png"></image>
-
-3. If using power supply, turn it on
-4. To start over, click the reset button on the Arduino. To stop, the easiest way is to turn off the power
 
 
 
