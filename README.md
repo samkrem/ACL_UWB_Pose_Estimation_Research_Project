@@ -38,17 +38,18 @@
   <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/sinusoidal_path.png" alt="Sinusoidal Path 1" style="width: 400px; display: inline-block;">
   <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/sinusoidal_path_2.png" alt="Sinusoidal Path 2" style="width: 400px; display: inline-block;">
 </div>
+
 * Multiple pose combinations can be combined into one path using the line `np.concatenate(waypoints_list, axis=0`
 * In order for a CSV file to be generated, the two robots must have the same total number of poses
 * The azimuth angle has range from (-150,150) and the elevation has a range from (-80,80)
-### Operation
+### Operation 
 * Make a CSV filename  (Line 6)
 * Go to the generate_waypoints function
 * Pick a path for both robots (Line 350) 
 * Pick custom parameters and bounds for both robots or choose random, default values (Line 307)
 * Combined various paths if need be
 * Run generate_waypoints.py
-* Now, a CSV file should have been generated
+* Now, a CSV file should have been generated 
 * For more information consult [this link](https://docs.google.com/presentation/d/1mAoERAXJj5MNAZ7o4W73mpC9JDMGl20eGiCZpD5WNRs/edit?usp=sharing)
 
 ## Robot Control Pipeline
@@ -89,6 +90,7 @@
 6. In a terminal: `roscore`
 7. In another terminal: type `source ~//metronome_ws/devel/setup.bash In the other terminal:` `roslaunch metronome_controller metronome_actuator.launch`
 8. For a google doc version see [this link](https://docs.google.com/document/d/1me-hjQnxL6Q4Z2mmnYES7WfVFdYb4pGamj5aENHr8oY)
+9. 
 ## Noise Prediction Model Information (Noise_Prediction_Model.py)
 ### Neural Network Architecture 
 * Input Features: Difference in true pose and distance between robots
