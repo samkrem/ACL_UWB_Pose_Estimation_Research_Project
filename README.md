@@ -50,6 +50,7 @@
 * Run generate_waypoints.py
 * Now, a CSV file should have been generated
 * For more information consult [this slideshow](https://docs.google.com/presentation/d/1mAoERAXJj5MNAZ7o4W73mpC9JDMGl20eGiCZpD5WNRs/edit#slide=id.g2c7d78624b1_2_0)
+
 ## Robot Control Pipeline
 
 ### Robot System Scheduler (metronome_scheduler_cmd.py)
