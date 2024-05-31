@@ -90,7 +90,30 @@
 6. In a terminal: `roscore`
 7. In another terminal: type `source ~//metronome_ws/devel/setup.bash In the other terminal:` `roslaunch metronome_controller metronome_actuator.launch`
 8. For a google doc version see [this link](https://docs.google.com/document/d/1me-hjQnxL6Q4Z2mmnYES7WfVFdYb4pGamj5aENHr8oY)
-9. 
+### Common Issues for Actuator Part of Experiment
+* Check that wifi is connected
+* Check that each connection is securely in
+* Check LIPO battery voltage
+* Try uploading uwb_platforms_final_driver.ino again to arduino through serial port
+* Upload uwb_platforms_final_userinput.ino to see if servo motor is receiving user input
+* If it is, go back to steps 2 and 3 because the ROS code probably hasn't been changed and the servo motor is actually working
+* Use a multimeter to diagnose where/if the arduino is receiving voltage at certain parts
+* Try swapping the harness mount and if the same issue happens, then replace the arduino board
+* If not, Resolder/solder harness mount
+### ROS related issues
+* Make sure ros nodes are executable (should be in green)
+* To make executable, chmod +x rosnode.py
+### Serial Port Issues
+* cd workspace/uwb-workspace/metronome_ws/src/metronome_controller/scripts
+*   code .
+*  ls /dev/ttyACM* will show you the USB ports in use
+*  If the USB port is greater than four, that means that I probably haven't made that port number executable, so do this:
+    * sudo chown swarm /dev/ttyACMnum
+    * sudo chmod 666 /dev/ttyACMnum
+*  Verify/change line 15 of MetronomeDriver1.py and MetronomeDriver2.py to match usb ports in use
+
+
+
 ## Noise Prediction Model Information (Noise_Prediction_Model.py)
 ### Neural Network Architecture 
 * Input Features: Difference in true pose and distance between robots
