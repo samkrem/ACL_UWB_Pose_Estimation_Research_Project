@@ -30,9 +30,9 @@
      * snake_6: Starts at bottom right and travels up
      * snake_7: Starts at top right and travels down
      * snake_8: Starts at top left and travels down
-<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/exhaustive_path.png" alt="Hello" width="400">
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/snake_2.png" alt="Hello" width="400">
 * Circular: The robot explores every possible comination of poses in a circular manner given distance between each circle and number of circles.
-<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/circular_path.png" alt="Hello" width="400">
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/circle_path.png" alt="Hello" width="400">
 * Sinusoidal: The robot explores combinations of poses in a sinusoidal manner. The direction of travel (horizontal or vertical), the distance between waves, and the length of each wave can be customized.
 <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1a.jpg" alt="Hello" width="400"> <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/sinusoidal_path.png" alt="Hello" width="400">  <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/sinusoidal_path_2.png" alt="Hello" width="400">
 * Multiple pose combinations can be combined into one path using the line `np.concatenate(waypoints_list, axis=0`
