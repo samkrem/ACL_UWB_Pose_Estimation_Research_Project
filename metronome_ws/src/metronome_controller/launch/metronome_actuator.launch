@@ -1,0 +1,5 @@
+<launch>
+    <node pkg = "metronome_controller" type = "metronome_scheduler_cmd.py" name = "scheduler_node" output = "screen"></node>
+    <node pkg = "metronome_controller" type = "metronome_driver_1.py" name = "driver1_node" output = "screen"></node>
+    <node pkg = "metronome_controller" type = "mteronome_driver_2.py" name = "driver2_node" output = "screen"></node>
+</launch>

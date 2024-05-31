@@ -1,0 +1,8 @@
+prefix=/home/skrem/metronome_ws/install
+
+Name: metronome_controller
+Description: Description of metronome_controller
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,2 @@
+metronome_controller
+-DCATKIN_DEVEL_PREFIX=/home/skrem/metronome_ws/devel -DCMAKE_INSTALL_PREFIX=/home/skrem/metronome_ws/install -G Unix Makefiles
