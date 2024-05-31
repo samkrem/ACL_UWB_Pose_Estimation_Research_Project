@@ -88,7 +88,7 @@
 5. Plug LIPO battery into harness mount DEAN connector Repeat 1-4 for each actuator
 6. In a terminal: `roscore`
 7. In another terminal: type `source ~//metronome_ws/devel/setup.bash In the other terminal:` `roslaunch metronome_controller metronome_actuator.launch`
-8. For a google doc version see [this link]([url](https://docs.google.com/document/d/1me-hjQnxL6Q4Z2mmnYES7WfVFdYb4pGamj5aENHr8oY/edit))
+8. For a google doc version see [this link](https://docs.google.com/document/d/1me-hjQnxL6Q4Z2mmnYES7WfVFdYb4pGamj5aENHr8oY/edit)
 ## Noise Prediction Model Information (Noise_Prediction_Model.py)
 ### Neural Network Architecture 
 * Input Features: Difference in true pose and distance between robots
