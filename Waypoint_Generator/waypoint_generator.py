@@ -253,7 +253,7 @@ def generate_sinusoidal_waypoints(params, bounds = None):
             y = np.sin(2*np.pi*x)+dist*i 
         else:
             y = np.linspace(0,y_spec['length'],points_per_wave)
-            x = np.sin(2*np.pi*y)       
+            x = np.sin(2*np.pi*y)+ dist * i
         indiv_wave_coord = np.column_stack((x,y))
         if i%2 != 0:
             indiv_wave_coord = np.flipud(indiv_wave_coord)
