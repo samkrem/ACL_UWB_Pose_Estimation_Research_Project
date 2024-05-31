@@ -49,7 +49,7 @@
 * Combined various paths if need be
 * Run generate_waypoints.py
 * Now, a CSV file should have been generated
-* For more information consult [this link](https://docs.google.com/presentation/d/1mAoERAXJj5MNAZ7o4W73mpC9JDMGl20eGiCZpD5WNRs/edit#slide=id.g2c7d78624b1_2_0)
+* For more information consult [this link](https://docs.google.com/presentation/d/1mAoERAXJj5MNAZ7o4W73mpC9JDMGl20eGiCZpD5WNRs/edit?usp=sharing)
 
 ## Robot Control Pipeline
 
