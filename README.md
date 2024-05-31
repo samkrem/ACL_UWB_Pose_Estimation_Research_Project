@@ -34,9 +34,9 @@
 * Circular: The robot explores every possible comination of poses in a circular manner given distance between each circle and number of circles.
 <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/circle_path.png" alt="Hello" width="400">
 * Sinusoidal: The robot explores combinations of poses in a sinusoidal manner. The direction of travel (horizontal or vertical), the distance between waves, and the length of each wave can be customized.
-<div style="display: flex;">
-  <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/sinusoidal_path.png" alt="Sinusoidal Path 1" style="width: 50%;">
-  <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/sinusoidal_path_2.png" alt="Sinusoidal Path 2" style="width: 50%;">
+<div>
+  <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/sinusoidal_path.png" alt="Sinusoidal Path 1" style="width: 400px; display: inline-block;">
+  <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/sinusoidal_path_2.png" alt="Sinusoidal Path 2" style="width: 400px; display: inline-block;">
 </div>
 * Multiple pose combinations can be combined into one path using the line `np.concatenate(waypoints_list, axis=0`
 * In order for a CSV file to be generated, the two robots must have the same total number of poses
