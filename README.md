@@ -49,7 +49,7 @@
 * Combined various paths if need be
 * Run generate_waypoints.py
 * Now, a CSV file should have been generated
-* For more information consult [this slideshow](https://docs.google.com/presentation/d/1mAoERAXJj5MNAZ7o4W73mpC9JDMGl20eGiCZpD5WNRs/edit#slide=id.g2c7d78624b1_2_0)
+* For more information consult [this link](https://docs.google.com/presentation/d/1mAoERAXJj5MNAZ7o4W73mpC9JDMGl20eGiCZpD5WNRs/edit#slide=id.g2c7d78624b1_2_0)
 
 ## Robot Control Pipeline
 
@@ -88,7 +88,7 @@
 5. Plug LIPO battery into harness mount DEAN connector Repeat 1-4 for each actuator
 6. In a terminal: `roscore`
 7. In another terminal: type `source ~//metronome_ws/devel/setup.bash In the other terminal:` `roslaunch metronome_controller metronome_actuator.launch`
-8. For a google doc version see [this link](https://docs.google.com/document/d/1me-hjQnxL6Q4Z2mmnYES7WfVFdYb4pGamj5aENHr8oY/edit)
+8. For a google doc version see [this link](https://docs.google.com/document/d/1me-hjQnxL6Q4Z2mmnYES7WfVFdYb4pGamj5aENHr8oY)
 ## Noise Prediction Model Information (Noise_Prediction_Model.py)
 ### Neural Network Architecture 
 * Input Features: Difference in true pose and distance between robots
