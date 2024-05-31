@@ -1,7 +1,7 @@
 # **ACL_UWB**
 # **Aerospace Controls Lab Multi-Agent Ultrawideband (UWB) Relative Pose Estimation Planner and Neural Network**
 ## Main Objective of Research: 
-* Improve UWB pose estimation for multi-agent systems by finding a relationship between real relative pose and UWB sensor range measurements
+* Improve UWB pose estimation for multi-agent systems by finding a relationship between real relative pose and UWB sensor range measurements and their associated error
 ## Key Steps to Achieve Objective:
 * Create a ROS planner that controls an autonomous multi-robot experiment to explore (x,y,yaw, azimuth, elevation) state space exhaustively in order to collect varying motion capture pose data, true distance data, and UWB sensor ranging data.
 * Develop a PyTorch fully connected neural network that predicts sensor noise given true pose and distance from autonomous robot data collection.
