@@ -19,7 +19,7 @@
 ### Specifications
 * The waypoint generator has four types of path styles: stationary, exhaustive, sinusoidal, and circular with each path being customizable given various paramters and pose bounds
 * Stationary: The robot's x,y start coordinate is stationary while the yaw, azimuth and elevation are free to change
-  <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1a.jpg" alt="Hello" width="400"> <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/stationary_path.png" alt="Hello" width="400">
+  <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/stationary_path.png" alt="Hello" width="400">
 
 * Exhaustive: The robot systematically explores every possible combination of (x,y,yaw, azimuth elevation) poses within specified ranges and step sizes in a rectangular manner. The direction and starting point of its travel can be adjusted in eight distinct ways, ensuring comprehensive coverage of the entire pose space.
      * snake_1: Starts at bottom left and travels right
@@ -30,9 +30,9 @@
      * snake_6: Starts at bottom right and travels up
      * snake_7: Starts at top right and travels down
      * snake_8: Starts at top left and travels down
- <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1a.jpg" alt="Hello" width="400"> <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/exhaustive_path.png" alt="Hello" width="400">
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/exhaustive_path.png" alt="Hello" width="400">
 * Circular: The robot explores every possible comination of poses in a circular manner given distance between each circle and number of circles.
- <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1a.jpg" alt="Hello" width="400"> <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/circular_path.png" alt="Hello" width="400">
+<img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/circular_path.png" alt="Hello" width="400">
 * Sinusoidal: The robot explores combinations of poses in a sinusoidal manner. The direction of travel (horizontal or vertical), the distance between waves, and the length of each wave can be customized.
 <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/Step1a.jpg" alt="Hello" width="400"> <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/sinusoidal_path.png" alt="Hello" width="400">  <img src="https://github.com/samkrem/ACL_UWB_SLAM/blob/main/images/sinusoidal_path_2.png" alt="Hello" width="400">
 * Multiple pose combinations can be combined into one path using the line `np.concatenate(waypoints_list, axis=0`
