@@ -107,7 +107,7 @@ def read_csv_file(file_path):
 
 
 if __name__ == "__main__":
-    rospy.loginfo("metronomescheduler is active")
+    rospy.loginfo("metronome_scheduler_cmd is active")
     file_path = "~/metronome_ws/src/metronome_controller/waypoints_ex.csv"
     r1_waypoints, r2_waypoints = read_csv_file(file_path)
 
