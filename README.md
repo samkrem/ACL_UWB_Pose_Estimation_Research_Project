@@ -115,6 +115,8 @@
 
 
 ## Noise Prediction Model Information (Noise_Prediction_Model.py)
+### Simulation Python scripts
+* UWB_NN_noisesimulation_simple.py and UWB_NN_noise_Simulation_X_Dep.py have ability to simulate various data distributions to test the noise prediction model's performance. Make a file path and choose one of the distribution options to create a .csv file of synthetic data.
 ### Neural Network Architecture 
 * Input Features: Difference in true pose and distance between robots
 * Hidden Layer 1: 256 neurons
