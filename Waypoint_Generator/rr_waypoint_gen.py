@@ -4,26 +4,46 @@ import pandas as pd
 from itertools import product
 
 # FILE_PATH="~/Desktop/ACL_UROP/ACL_UWB_waypoint_generator/snake_sin.csv"
-WAYPOINTS_FILE_PATH="~/Desktop/ACL_UROP/ACL_UWB_waypoint_generator/snake_sin_waypoints.csv"
-COORDS_FILE_PATH="~/Desktop/ACL_UROP/ACL_UWB_waypoint_generator/snake_sin_rr_coords.csv"
+WAYPOINTS_FILE_PATH="~/Desktop/ACL_UROP/ACL_UWB_waypoint_generator/circular_sin_waypoints.csv"
+COORDS_FILE_PATH="~/Desktop/ACL_UROP/ACL_UWB_waypoint_generator/circular_sin_rr_coords.csv"
+# WAYPOINTS_FILE_PATH="~/Desktop/ACL_UROP/ACL_UWB_waypoint_generator/snake_stationary_waypoints.csv"
+# COORDS_FILE_PATH="~/Desktop/ACL_UROP/ACL_UWB_waypoint_generator/snake_stationary_rr_coords.csv"
+# WAYPOINTS_FILE_PATH="~/Desktop/ACL_UROP/ACL_UWB_waypoint_generator/snake_sin_waypoints.csv"
+# COORDS_FILE_PATH="~/Desktop/ACL_UROP/ACL_UWB_waypoint_generator/snake_sin_rr_coords.csv"
 
 WAYPOINTS_DATA_TITLES=["t","x1", "y1","heading1","az1", "el1","x2", "y2", "heading2","az2", "el2",  "dist"]
 COORDS_DATA_TITLES = ["t","x1", "y1","heading1","x2", "y2", "heading2"]
 def save_waypoints_as_csv(waypoints1, waypoints2):
     """
-    Converts waypoints to csv file
+    Converts waypoints to a CSV file and visualizes the distance histogram.
     Parameters:
-    - waypoints (numpy.ndarray): 2D array of shape (n, 4) representing (x, y, az, el) coordinates of waypoints.
-    Returns: Nothing
+    - waypoints1 (numpy.ndarray): 2D array of shape (n, 5) representing (x, y, heading, az, el) coordinates of waypoints for robot 1.
+    - waypoints2 (numpy.ndarray): 2D array of shape (m, 5) representing (x, y, heading, az, el) coordinates of waypoints for robot 2.
+    - waypoints_titles (list): List of column titles for the CSV file.
+    - file_path (str): Path to save the CSV file.
+    Returns: None
     """
-    t = np.linspace(0,waypoints1.shape[0]-1, waypoints1.shape[0])
-    x1, y1, heading1, az1, el1 = waypoints1[:,0], waypoints1[:,1], waypoints1[:,2],waypoints1[:,3], waypoints1[:,4]
-    x2, y2, heading2, az2, el2 = waypoints2[:,0], waypoints2[:,1], waypoints2[:,2],waypoints2[:,3], waypoints2[:,4]
-    dist = np.sqrt(np.abs((x2-x1)**2) + np.abs((y2-y1)**2))
-
+    # Determine the longer length
+    max_length = max(waypoints1.shape[0], waypoints2.shape[0])
     
-    df = pd.DataFrame({
-        WAYPOINTS_DATA_TITLES[0]: t,   
+    # Pad the shorter array by repeating its last row
+    def pad_waypoints(waypoints, length):
+        if waypoints.shape[0] < length:
+            padding = np.tile(waypoints[-1], (length - waypoints.shape[0], 1))
+            return np.vstack([waypoints, padding])
+        return waypoints
+    
+    waypoints1 = pad_waypoints(waypoints1, max_length)
+    waypoints2 = pad_waypoints(waypoints2, max_length)
+    
+    # Extract columns
+    t = np.arange(max_length)
+    x1, y1, heading1, az1, el1 = waypoints1[:, 0], waypoints1[:, 1], waypoints1[:, 2], waypoints1[:, 3], waypoints1[:, 4]
+    x2, y2, heading2, az2, el2 = waypoints2[:, 0], waypoints2[:, 1], waypoints2[:, 2], waypoints2[:, 3], waypoints2[:, 4]
+    dist = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+    
+    # Create a DataFrame
+    df = pd.DataFrame({ WAYPOINTS_DATA_TITLES[0]: t,   
         WAYPOINTS_DATA_TITLES[1]: x1,
         WAYPOINTS_DATA_TITLES[2]: y1,
         WAYPOINTS_DATA_TITLES[3]: heading1,
@@ -35,9 +55,13 @@ def save_waypoints_as_csv(waypoints1, waypoints2):
         WAYPOINTS_DATA_TITLES[9]: az2,
         WAYPOINTS_DATA_TITLES[10]: el2,
         WAYPOINTS_DATA_TITLES[11]: dist
-    }, columns=WAYPOINTS_DATA_TITLES) # Include the column titles)
-    df.to_csv(WAYPOINTS_FILE_PATH,  mode='a', header=False, index=False)
-    plt.hist(dist,5)
+    }, columns=WAYPOINTS_DATA_TITLES)  # Include the column titles
+    
+    # Save the DataFrame to a CSV file
+    df.to_csv(WAYPOINTS_FILE_PATH, mode='a', header=False, index=False)
+    
+    # Plot the distance histogram
+    plt.hist(dist, bins=5)
     plt.title("Distance Histogram for Two Robots")
     plt.xlabel("Distance (m)")
     plt.ylabel("Frequency")
@@ -50,10 +74,21 @@ def save_coords_as_csv(coords1, coords2):
     - waypoints (numpy.ndarray): 2D array of shape (n, 4) representing (x, y, az, el) coordinates of waypoints.
     Returns: Nothing
     """
+    max_length = max(coords1.shape[0], coords2.shape[0])
+    
+    # Pad the shorter array by repeating its last row
+    def pad_coords(coords, length):
+        if coords.shape[0] < length:
+            padding = np.tile(coords[-1], (length - coords.shape[0], 1))
+            return np.vstack([coords, padding])
+        return coords
+    
+    coords1 = pad_coords(coords1, max_length)
+    coords2 = pad_coords(coords2, max_length)
+    
     t = np.linspace(0,coords1.shape[0]-1, coords1.shape[0])
     x1, y1, heading1 = coords1[:,0], coords1[:,1],coords1[:,2]
     x2, y2, heading2 = coords2[:,0], coords2[:,1],coords2[:,2]
-    dist = np.sqrt(np.abs((x2-x1)**2) + np.abs((y2-y1)**2))
 
     
     df = pd.DataFrame({
@@ -66,11 +101,7 @@ def save_coords_as_csv(coords1, coords2):
         COORDS_DATA_TITLES[6]: heading2,
     }, columns=COORDS_DATA_TITLES) # Include the column titles)
     df.to_csv(COORDS_FILE_PATH,  mode='a', header=False, index=False)
-    plt.hist(dist,5)
-    plt.title("Distance Histogram for Two Robots")
-    plt.xlabel("Distance (m)")
-    plt.ylabel("Frequency")
-    plt.show()
+
 
 def check_intercept(waypoints1, waypoints2):
     """
@@ -247,14 +278,24 @@ def generate_circular_waypoints(params, bounds):
     coordinates = []
     circumference_sum = 2 * np.pi * sum([(i + 1) * dr for i in range(num_circles)])
 
+    # for i in range(num_circles):
+    #     r = (i + 1) * dr
+    #     circle_circum = 2 * np.pi * r
+    #     points_per_circle = int(total_xy_points * circle_circum / circumference_sum)
+    #     angles = np.linspace(0, 2 * np.pi, points_per_circle)
+    #     x, y = r * np.cos(angles), r * np.sin(angles)
+    #     indiv_circle = np.column_stack((x, y))
+    #     coordinates.extend(indiv_circle)
+    points_per_circle = total_xy_points // num_circles
     for i in range(num_circles):
         r = (i + 1) * dr
-        circle_circum = 2 * np.pi * r
-        points_per_circle = int(total_xy_points * circle_circum / circumference_sum)
+        # circle_circum = 2 * np.pi * r
+        # points_per_circle = int(total_xy_points * circle_circum / circumference_sum)
         angles = np.linspace(0, 2 * np.pi, points_per_circle)
         x, y = r * np.cos(angles), r * np.sin(angles)
         indiv_circle = np.column_stack((x, y))
         coordinates.extend(indiv_circle)
+
 
     left_over_count = total_xy_points - len(coordinates)
     last_points = np.tile(coordinates[-1], (left_over_count, 1))
@@ -307,19 +348,33 @@ def create_headings(coordinates):
     dys = np.append(dys, 0)
     prev_dx, prev_dy = dxs[0], dys[0]
 
-    headings = [np.arctan2(prev_dy, prev_dx)]
+    headings = [np.arctan2(prev_dy, prev_dx)] #if np.arctan2(prev_dy, prev_dx) > 0 else [2*np.pi + np.arctan2(prev_dy, prev_dx)]
     for i in range(1,len(coordinates)):
         if dxs[i]== 0 and dys[i] == 0:
-            if i ==0:
-                headings.append(0)
-            else:
-                headings.append(np.arctan2(prev_dy, prev_dx))
-        # elif dxs[i] ==0:
-        #     if dys[i] 
-        #     headings.append(np.pi/2)
+            headings.append(headings[-1])
+    
         else:
-            headings.append(np.arctan2(dys[i], dxs[i]))
-        prev_dx, prev_dy = dxs[i], dys[i]
+            # if np.arctan2(prev_dy, prev_dx)<0:
+            #     headings.append(2*np.pi + np.arctan2(dys[i], dxs[i]))
+            # else:    
+            #     headings.append(np.arctan2(dys[i], dxs[i]))
+            difference_orig = abs(np.arctan2(dys[i], dxs[i]) - headings[-1])
+            difference_pos_2pi = abs(2*np.pi + np.arctan2(dys[i], dxs[i]) -headings[-1])
+            difference_neg_2pi = abs(-2*np.pi + np.arctan2(dys[i], dxs[i]) - headings[-1]) 
+            if dxs[i] == 6 and dys[i] ==0:
+                print(difference_orig,difference_pos_2pi,difference_neg_2pi) 
+                print(np.arctan2(dys[i], dxs[i]))
+                print(headings[-1])
+                print(2*np.pi + np.arctan2(dys[i], dxs[i]))
+                print(-2*np.pi + np.arctan2(dys[i], dxs[i]))
+            if difference_orig <= difference_pos_2pi and difference_orig <= difference_neg_2pi:
+                headings.append(np.arctan2(dys[i], dxs[i]))
+            elif difference_pos_2pi <= difference_orig and difference_pos_2pi <= difference_neg_2pi:
+                headings.append(2* np.pi + np.arctan2(dys[i], dxs[i]))
+            elif difference_neg_2pi <= difference_orig and difference_neg_2pi <= difference_neg_2pi: 
+                headings.append(-2* np.pi + np.arctan2(dys[i], dxs[i]))
+
+        # prev_dx, prev_dy = dxs[i], dys[i]
     return headings
 def create_trans_rot_waypoint(coordinates, az_spec, el_spec):
     """
@@ -384,17 +439,17 @@ def generate_params_bounds(option1, option2):
         params1 = (sin_start1, num_points1 ,num_waves1, wave_dist1, direction1)
         bounds1 = {'length': 8, 'step': 30}, {'length': 8, 'step': 30}, {'min': -150, 'max': 150, 'step': 10}, {'min': -80, 'max': 80, 'step': 10}  # {'min': -180, 'max': 180, 'step': 1},
     elif option1 == "Circular":
-        circle_start1, num_points1, dr1, num_circles1 = (-2,-4), 900, 5
+        circle_start1, num_points1, dr1, num_circles1 = (0,0), 50, 1, 4
         params1 = (circle_start1, num_points1, dr1, num_circles1)
         bounds1 =  {'min': -150, 'max': 150, 'step': 10}, {'min': -80, 'max': 80, 'step': 10} #{'min': -180, 'max': 180, 'step': 1},
     if option2 == "Stationary":
-        params2 = ((7,11), 900)
-        bounds2 =  {'min': -150, 'max': 150, 'step': 10}, {'min': -80, 'max': 80, 'step': 10} #{'min': 0, 'max': 180, 'step': 1},
+        params2 = ((0,0), 1)
+        bounds2 =  {'min': -150, 'max': 150, 'step': 5}, {'min': -80, 'max': 80, 'step': 5} #{'min': 0, 'max': 180, 'step': 1},
     elif option2 == "Exhaustive":
         params2 = ((-5,5), "snake_8")
         bounds2 = {'length': 8, 'step': 15}, {'length': 8, 'step': 15}, {'min': -150, 'max': 150, 'step': 20}, {'min': -80, 'max': 80, 'step': 20} # {'min': -180, 'max': 180, 'step': 1},
     elif option2 == "Sinusoidal":
-        sin_start2, num_points2, num_waves2, wave_dist2, direction2 =(-5,11), 25, 3, 6, "vertical"
+        sin_start2, num_points2, num_waves2, wave_dist2, direction2 =(-5, -5), 25, 3, 6, "vertical"
         params2 = (sin_start2, num_points2 ,num_waves2, wave_dist2, direction2)
         bounds2 = {'length': 8}, {'length': 8}, {'min': -150, 'max': 150, 'step': 5}, {'min': -80, 'max': 80, 'step': 5}  #{'min': -180, 'max': 180, 'step': 1}, 
     elif option2 == "Circular":
@@ -410,11 +465,10 @@ def generate_waypoints():
     
     df_coords = pd.DataFrame(columns=COORDS_DATA_TITLES)  # Include the column titles)
     df_coords.to_csv(COORDS_FILE_PATH,  mode='a', header=True, index=False)
-    COORDS_FILE_PATH
     
     #Example Params
     path_options = ["Stationary", "Exhaustive", "Sinusoidal", "Circular"]
-    option1, option2 = path_options[1], path_options[2]
+    option1, option2 = path_options[3], path_options[2]
 
     option1_params, option2_params, bounds1, bounds2, = generate_params_bounds(option1, option2)
 
@@ -454,3 +508,6 @@ def generate_waypoints():
 
 if __name__ == "__main__":
     generate_waypoints()
+
+
+
